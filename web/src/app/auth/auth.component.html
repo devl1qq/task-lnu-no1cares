@@ -1,0 +1,31 @@
+<div class="container col-sm-4">
+  <h3>{{ this.isLoginMode ? 'Welcome back' : 'Welcome, let\'s set up an account' }}</h3>
+
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit()">
+    <div class="form-group my-3">
+      <label for="email">Email</label>
+      <input type="email" class="form-control" formControlName="email" id="email" placeholder="Your email here...">
+    </div>
+
+    <div class="form-group my-3">
+      <label for="password">Password</label>
+      <input type="password" class="form-control" formControlName="password" id="password" placeholder="Your password here...">
+    </div>
+
+    <div class="form-group my-3" *ngIf="!isLoginMode">
+      <label for="confirmPassword">Confirm Password</label>
+      <input type="password" class="form-control" formControlName="confirmPassword" id="confirmPassword" placeholder="Confirm your password here...">
+    </div>
+
+    <div class="my-3 center" *ngIf="f['confirmPassword'].errors?.['matching']">
+      <p class="text-red">Passwords do not match!</p>
+    </div>
+
+    <div class="d-flex flex-column align-items-end">
+      <button type="submit" class="btn btn-primary submit" [disabled]="!authForm.valid">Submit</button>
+      <p *ngIf="isLoginMode" class="register-hint">Not registered yet? <a class="auth-link" (click)="onChangeMode()">Sign Up Now</a></p>
+      <p *ngIf="!isLoginMode" class="register-hint">Already registered? <a class="auth-link" (click)="onChangeMode()">Log In</a></p>
+    </div>
+  </form>
+
+</div>
