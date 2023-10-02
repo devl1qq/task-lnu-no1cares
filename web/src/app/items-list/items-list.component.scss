@@ -1,0 +1,27 @@
+.list-item {
+  display: flex;
+
+  flex-direction: row;
+  padding: 1rem;
+
+  &:last-child {
+    border-bottom: none;
+  }
+
+  &:hover {
+    background-color: rgb(208, 208, 208);
+  }
+
+  .list-item-name {
+    margin-left: 1rem;
+    font-size: 1.1rem;
+    font-weight: bold;
+  }
+
+  .list-item-data {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-left: auto;
+  }
+}

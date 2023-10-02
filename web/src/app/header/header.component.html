@@ -4,5 +4,7 @@
        (click)="onPathReselect(i)">{{ pathSegment }}</a>{{ i < path.segments.length - 1 ? '/' : '' }}
   </div>
 
-  <div class="ms-auto"><b>{{ userName }}</b></div>
+  <app-user-menu [userName]="userName"
+                 class="ms-auto">
+  </app-user-menu>
 </div>

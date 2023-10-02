@@ -1,0 +1,12 @@
+<div *ngIf="viewType === 'list'"
+     class="px-5">
+  <div *ngFor="let item of items"
+       class="list-item col-sm-12">
+    <img ngSrc="/assets/img/folder.svg" alt="folder">
+    <p class="list-item-name">{{item.name}}</p>
+    <div class="col-sm-4 list-item-data">
+      <p>{{item.date}}</p>
+      <p>{{item.size}}</p>
+    </div>
+</div>
+</div>
