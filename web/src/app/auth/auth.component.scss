@@ -1,4 +1,8 @@
-.auth-link {
+.auth {
+  margin-top: 15rem;
+}
+
+.default-link {
   color: black;
   text-decoration: underline;
 }
@@ -9,8 +13,4 @@
 
 button.submit {
   border-radius: 5%;
-}
-
-.text-red {
-  color: red;
 }

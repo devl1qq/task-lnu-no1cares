@@ -3,8 +3,6 @@ import {
   AbstractControl,
   FormControl,
   FormGroup,
-  ValidationErrors,
-  ValidatorFn,
   Validators,
 } from '@angular/forms';
 import PasswordValidator from '../utils/password-validator';
@@ -34,8 +32,6 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.f['confirmPassword'].errors);
-
     console.log(this.authForm.value);
   }
 
@@ -49,9 +45,7 @@ export class AuthComponent implements OnInit {
         ?.setValidators([Validators.minLength(8)]);
       this.authForm.get('confirmPassword')?.setValue('');
     } else {
-      this.authForm.setValidators(
-        PasswordValidator.match('password', 'confirmPassword')
-      );
+      this.authForm.setValidators(PasswordValidator.match('password', 'confirmPassword'));
       this.authForm
         .get('confirmPassword')
         ?.setValidators([Validators.minLength(8), Validators.required]);

@@ -1,0 +1,8 @@
+<div class="header ml-1 col-sm-12 p-3 d-flex">
+  <div *ngFor="let pathSegment of path.segments; index as i">
+    <a class="path-link {{ i === path.segments.length - 1 ? 'text-dark fw-bold' : 'text-muted' }}"
+       (click)="onPathReselect(i)">{{ pathSegment }}</a>{{ i < path.segments.length - 1 ? '/' : '' }}
+  </div>
+
+  <div class="ms-auto"><b>{{ userName }}</b></div>
+</div>
