@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { ItemViewType } from '../utils/common';
 
 interface Path {
@@ -13,7 +13,7 @@ interface Path {
 export class HeaderComponent implements OnInit {
   path!: Path;
   userName = 'John Doe';
-  viewType: ItemViewType = 'grid';
+  @Input() viewType!: ItemViewType;
 
   @Output() toggleViewType = new EventEmitter<ItemViewType>();
   @Output() addNew = new EventEmitter<void>();
