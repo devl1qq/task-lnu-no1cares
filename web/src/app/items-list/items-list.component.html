@@ -1,12 +1,47 @@
-<div *ngIf="viewType === 'list'"
-     class="px-5">
-  <div *ngFor="let item of items"
-       class="list-item col-sm-12">
-    <img ngSrc="/assets/img/folder.svg" alt="folder">
+<app-header
+  (toggleViewType)="onToggleViewType($event)"
+  (addNew)="onAddNew()">
+</app-header>
+
+<div
+  *ngIf="viewType === 'list'"
+  class="px-5">
+  <div
+    *ngFor="let item of items"
+    class="list-item col-sm-12">
+    <img
+      class="list-item-icon"
+      src="/assets/icons/folder.svg"
+      alt="folder">
     <p class="list-item-name">{{item.name}}</p>
     <div class="col-sm-4 list-item-data">
       <p>{{item.date}}</p>
       <p>{{item.size}}</p>
     </div>
+  </div>
 </div>
+
+<div
+  *ngIf="viewType === 'grid'"
+  class="px-5"
+  id="grid">
+  <div
+    *ngFor="let item of items"
+    class="grid-item col-md-2 col-sm-4 col-6">
+    <img
+      class="grid-item-icon"
+      src="/assets/icons/folder.svg"
+      alt="folder">
+    <span class="grid-item-name">{{item.name}}</span>
+  </div>
+</div>
+
+<div
+  *ngIf="!items || !items.length"
+  class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <p class="text-center no-items">No items</p>
+    </div>
+  </div>
 </div>

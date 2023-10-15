@@ -1,7 +1,40 @@
-.path-link {
-  text-decoration: none;
+#header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 
-  &:hover {
-    text-decoration: underline;
+  #path {
+    display: flex;
+    flex-direction: row;
+
+    .path-link {
+      text-decoration: none;
+
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  #menu-box {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    button {
+      padding: 0;
+      border: none;
+      margin: 0 0.5rem;
+      display: flex;
+      align-items: center;
+
+      #add-new {
+        transform: translateY(10%);
+      }
+
+      span {
+        margin-left: 0.5rem;
+      }
+    }
   }
 }

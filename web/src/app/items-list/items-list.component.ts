@@ -1,6 +1,5 @@
-import {Component, OnInit} from '@angular/core';
-
-type ViewType = 'list' | 'grid';
+import { Component, OnInit } from '@angular/core';
+import { ItemViewType } from '../utils/common';
 
 type ItemType = 'folder' | 'image' | 'video' | 'audio' | 'document';
 
@@ -14,27 +13,79 @@ interface Item {
 @Component({
   selector: 'app-items-list',
   templateUrl: './items-list.component.html',
-  styleUrls: ['./items-list.component.scss']
+  styleUrls: ['./items-list.component.scss'],
 })
-export class ItemsListComponent implements OnInit{
-  viewType: ViewType = 'list';
+export class ItemsListComponent implements OnInit {
+  viewType: ItemViewType = 'grid';
   items!: Item[];
 
   ngOnInit(): void {
-    this.items = [{
-      type: 'folder',
-      name: 'Folder 1',
-      date: '2021-01-01',
-      size: '1.5 MB'
-    }, {
-      type: 'folder',
-      name: 'Folder 1',
-      date: '2021-01-01',
-      size: '1.5 MB'
-    }];
+    this._fillFolders();
   }
 
-  onToggleViewType(): void {
-    this.viewType = this.viewType === 'list' ? 'grid' : 'list';
+  onToggleViewType($event: ItemViewType): void {
+    this.viewType = $event;
+  }
+
+  onAddNew(): void {
+    this.items.push({
+      type: 'folder',
+      name: 'New Folder',
+      date: '2021-01-01',
+      size: '1.5 MB',
+    });
+  }
+
+  private _fillFolders(): void {
+    this.items = [
+      {
+        type: 'folder',
+        name: 'Folder 1',
+        date: '2021-01-01',
+        size: '1.5 MB',
+      },
+      {
+        type: 'folder',
+        name: 'Folder 1',
+        date: '2021-01-01',
+        size: '1.5 MB',
+      },
+      {
+        type: 'folder',
+        name: 'Folder 1',
+        date: '2021-01-01',
+        size: '1.5 MB',
+      },
+      {
+        type: 'folder',
+        name: 'Folder 1',
+        date: '2021-01-01',
+        size: '1.5 MB',
+      },
+      {
+        type: 'folder',
+        name: 'Folder 1',
+        date: '2021-01-01',
+        size: '1.5 MB',
+      },
+      {
+        type: 'folder',
+        name: 'Folder 1',
+        date: '2021-01-01',
+        size: '1.5 MB',
+      },
+      {
+        type: 'folder',
+        name: 'Folder 1',
+        date: '2021-01-01',
+        size: '1.5 MB',
+      },
+      {
+        type: 'folder',
+        name: 'Folder 1',
+        date: '2021-01-01',
+        size: '1.5 MB',
+      },
+    ];
   }
 }

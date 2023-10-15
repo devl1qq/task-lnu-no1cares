@@ -1,10 +1,33 @@
-<div class="header ml-1 col-sm-12 p-3 d-flex">
-  <div *ngFor="let pathSegment of path.segments; index as i">
-    <a class="path-link {{ i === path.segments.length - 1 ? 'text-dark fw-bold' : 'text-muted' }}"
-       (click)="onPathReselect(i)">{{ pathSegment }}</a>{{ i < path.segments.length - 1 ? '/' : '' }}
+<div class="ml-1 col-sm-12 p-3" id="header">
+  <div id="path">
+    <div *ngFor="let pathSegment of path.segments; index as i">
+      <a
+        class="path-link"
+        [class.text-dark]="i === path.segments.length - 1"
+        [class.fw-bold]="i === path.segments.length - 1"
+        [class.text-muted]="i !== path.segments.length - 1"
+        (click)="onPathReselect(i)">
+        {{ pathSegment }}</a>{{ i < path.segments.length - 1 ? '/' : '' }}</div>
   </div>
 
-  <app-user-menu [userName]="userName"
-                 class="ms-auto">
-  </app-user-menu>
+  <div id="menu-box">
+    <button
+      mat-button
+      class="btn btn-default"
+      (click)="onAddNew()">
+      <app-icon
+        name="plus"
+        id="add-new">
+      </app-icon>
+      <span>Add new</span>
+    </button>
+    <button
+      mat-button
+      class="btn btn-default"
+      (click)="onToggleViewType()">
+      <app-icon [name]="viewType"></app-icon>
+    </button>
+    <app-user-menu [userName]="userName">
+    </app-user-menu>
+  </div>
 </div>
