@@ -28,12 +28,14 @@
   id="grid">
   <div
     *ngFor="let item of items"
-    class="grid-item col-md-2 col-sm-4 col-6">
-    <img
-      class="grid-item-icon"
-      src="/assets/icons/folder.svg"
-      alt="folder">
-    <span class="grid-item-name">{{item.name}}</span>
+    class="grid-item-wrap col-md-2 col-sm-4 col-6">
+    <div class="grid-item">
+      <img
+        class="grid-item-icon"
+        src="/assets/icons/folder.svg"
+        alt="folder">
+      <span class="grid-item-name">{{item.name}}</span>
+    </div>
   </div>
 </div>
 
