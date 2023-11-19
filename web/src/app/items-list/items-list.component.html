@@ -4,12 +4,28 @@
   (addNew)="onAddNew()">
 </app-header>
 
+
+
+<div
+  *ngIf="!items || !items.length"
+  class="container">
+  <div class="row">
+    <div class="col-sm-12">
+      <p class="text-center no-items">No items</p>
+    </div>
+  </div>
+</div>
+
+
 <div
   *ngIf="viewType === 'list'"
+  (click)="disableContextMenu()"
   class="px-5">
   <div
-    *ngFor="let item of items"
-    class="list-item col-sm-12">
+  *ngFor="let item of items"
+  class="list-item col-sm-12"
+    (contextmenu)="onContextMenu($event, item)"
+    oncontextmenu="return false;">
     <img
       class="list-item-icon"
       src="/assets/icons/folder.svg"
@@ -24,27 +40,42 @@
 
 <div
   *ngIf="viewType === 'grid'"
-  class="px-5"
+  (click)="disableContextMenu()"
+  class="px-1"
   id="grid">
   <div
     *ngFor="let item of items"
-    class="grid-item-wrap col-md-2 col-sm-4 col-6">
-    <div class="grid-item">
+    (contextmenu)="onContextMenu($event, item)"
+    class="grid-item-wrap col-lg-2 col-md-3 col-sm-4 col-6">
+    <div
+      class="grid-item"
+      oncontextmenu="return false;">
       <img
         class="grid-item-icon"
         src="/assets/icons/folder.svg"
         alt="folder">
-      <span class="grid-item-name">{{item.name}}</span>
+      <span
+        *ngIf="!item.isRenameMode"
+        class="grid-item-name">
+        {{item.name}}
+      </span>
+      <input
+        *ngIf="item.isRenameMode"
+        class="grid-item-name-input"
+        type="text"
+        [placeholder]="item.name"
+        [(ngModel)]="newItemName"
+        (keyup.enter)="rename(item)"
+        (keyup.escape)="item.isRenameMode = false"
+        (blur)="rename(item)">
     </div>
   </div>
 </div>
 
-<div
-  *ngIf="!items || !items.length"
-  class="container">
-  <div class="row">
-    <div class="col-sm-12">
-      <p class="text-center no-items">No items</p>
-    </div>
-  </div>
+<div *ngIf="contextMenuSettings.isVisible">
+  <app-context-menu
+    [x]="contextMenuSettings.x"
+    [y]="contextMenuSettings.y"
+    [data]="contextMenuSettings.data">
+  </app-context-menu>
 </div>

@@ -1,0 +1,13 @@
+<div
+  id="context-menu"
+  [ngStyle]="{'left.px': x, 'top.px': y}">
+  <div
+    *ngFor="let dataItem of data"
+    class="context-menu-item">
+    <span
+      (click)="dataItem.action()"
+      class="context-menu-item-name">
+      {{ dataItem.name }}
+    </span>
+  </div>
+</div>

@@ -1,0 +1,17 @@
+#context-menu {
+  position: absolute;
+  background-color: white;
+  border: 2px solid rgb(208, 208, 208);
+  border-radius: .5em;
+
+  .context-menu-item {
+    padding: 0.5rem;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+
+    &:hover {
+      background-color: rgb(208, 208, 208);
+    }
+  }
+}

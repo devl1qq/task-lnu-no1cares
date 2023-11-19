@@ -6,6 +6,9 @@ import {
   Validators,
 } from '@angular/forms';
 import PasswordValidator from '../utils/password-validator';
+import { AuthService } from '../services/auth.service';
+import { Router } from '@angular/router';
+import { AuthRequest } from '../utils/common';
 
 @Component({
   selector: 'app-auth',
@@ -15,6 +18,8 @@ import PasswordValidator from '../utils/password-validator';
 export class AuthComponent implements OnInit {
   authForm!: FormGroup;
   isLoginMode = true;
+
+  constructor(private _auth: AuthService, private _router: Router) {}
 
   ngOnInit(): void {
     this.authForm = new FormGroup({
@@ -32,7 +37,20 @@ export class AuthComponent implements OnInit {
   }
 
   onSubmit(): void {
-    console.log(this.authForm.value);
+    if (this.authForm.invalid) {
+      return;
+    }
+
+    const authRequest: AuthRequest = this.authForm.value;
+
+    if (this.isLoginMode) {
+      this._auth.signIn(authRequest);
+    } else {
+      this._auth.signUp(authRequest);
+    }
+
+    this._router.navigate(['list']);
+    // todo: add post processing on then()
   }
 
   onChangeMode(): void {
@@ -45,7 +63,9 @@ export class AuthComponent implements OnInit {
         ?.setValidators([Validators.minLength(8)]);
       this.authForm.get('confirmPassword')?.setValue('');
     } else {
-      this.authForm.setValidators(PasswordValidator.match('password', 'confirmPassword'));
+      this.authForm.setValidators(
+        PasswordValidator.match('password', 'confirmPassword')
+      );
       this.authForm
         .get('confirmPassword')
         ?.setValidators([Validators.minLength(8), Validators.required]);
