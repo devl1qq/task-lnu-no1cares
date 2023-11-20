@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { ItemViewType } from '../utils/common';
+import { ItemViewType } from '../utils/file';
 
 interface Path {
   segments: string[];
@@ -17,6 +17,7 @@ export class HeaderComponent implements OnInit {
 
   @Output() toggleViewType = new EventEmitter<ItemViewType>();
   @Output() addNew = new EventEmitter<void>();
+  @Output() uploadFile = new EventEmitter<FileList>();
 
   ngOnInit(): void {
     this.path = {
@@ -37,5 +38,16 @@ export class HeaderComponent implements OnInit {
 
   onAddNew(): void {
     this.addNew.emit();
+  }
+
+  onUploadFile($event: Event): void {
+    const input = $event.target as HTMLInputElement;
+    const { files } = input;
+
+    if (!files || !files.length) {
+      return;
+    }
+
+    this.uploadFile.emit(files);
   }
 }

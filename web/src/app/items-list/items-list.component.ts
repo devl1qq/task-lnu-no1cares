@@ -1,18 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { ContextMenuSettings, ItemViewType } from '../utils/common';
-
-type ItemType = 'folder' | 'image' | 'video' | 'audio' | 'document';
-
-type Item = {
-  type: ItemType;
-  name: string;
-  date: string; // to date
-  size: string;
-};
-
-type ItemViewModel = Item & {
-  isRenameMode?: boolean;
-};
+import { ContextMenuSettings } from '../utils/common';
+import { ItemViewModel, ItemViewType, toItem } from '../utils/file';
 
 @Component({
   selector: 'app-items-list',
@@ -39,11 +27,17 @@ export class ItemsListComponent implements OnInit {
     this.viewType = $event;
   }
 
+  onUploadFile(files: FileList): void {
+    Array.from(files)
+      .map((file) => toItem(file))
+      .forEach((item) => this._addItem(item));
+  }
+
   // region Context Menu
 
   onAddNew(): void {
     this.disableContextMenu();
-    this.items.push({
+    this._addItem({
       type: 'folder',
       name: 'New Folder',
       date: '2021-01-01',
@@ -154,6 +148,10 @@ export class ItemsListComponent implements OnInit {
         size: '1.5 MB',
       },
     ];
+  }
+
+  private _addItem(item: ItemViewModel) {
+    this.items.push(item);
   }
 
   // endregion

@@ -1,9 +1,9 @@
 <app-header
   [viewType]="viewType"
   (toggleViewType)="onToggleViewType($event)"
-  (addNew)="onAddNew()">
+  (addNew)="onAddNew()"
+  (uploadFile)="onUploadFile($event)">
 </app-header>
-
 
 
 <div
@@ -28,9 +28,22 @@
     oncontextmenu="return false;">
     <img
       class="list-item-icon"
-      src="/assets/icons/folder.svg"
-      alt="folder">
-    <p class="list-item-name">{{item.name}}</p>
+      [src]="'/assets/icons/item-types/' + item.type + '.svg'"
+      [alt]="item.type">
+    <p
+      *ngIf="!item.isRenameMode"
+      class="list-item-name">
+      {{item.name}}
+    </p>
+    <input
+      *ngIf="item.isRenameMode"
+      class="list-item-name-input"
+      type="text"
+      [placeholder]="item.name"
+      [(ngModel)]="newItemName"
+      (keyup.enter)="rename(item)"
+      (keyup.escape)="item.isRenameMode = false"
+      (blur)="rename(item)">
     <div class="col-sm-4 list-item-data">
       <p>{{item.date}}</p>
       <p>{{item.size}}</p>
@@ -52,8 +65,8 @@
       oncontextmenu="return false;">
       <img
         class="grid-item-icon"
-        src="/assets/icons/folder.svg"
-        alt="folder">
+        [src]="'/assets/icons/item-types/' + item.type + '.svg'"
+        [alt]="item.type">
       <span
         *ngIf="!item.isRenameMode"
         class="grid-item-name">

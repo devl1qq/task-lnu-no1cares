@@ -11,6 +11,17 @@
   </div>
 
   <div id="menu-box">
+    <div class="file-upload">
+      <label for="upload-file">
+        <i class="fa fa-arrow-up"></i> Upload
+      </label>
+      <input
+        type="file"
+        (change)="onUploadFile($event)"
+        id="upload-file"
+        name="upload-file"
+        hidden/>
+    </div>
     <button
       mat-button
       class="btn btn-default"
