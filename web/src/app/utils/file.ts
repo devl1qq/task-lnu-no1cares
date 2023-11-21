@@ -1,3 +1,5 @@
+import * as moment from 'moment';
+
 export type ItemViewType = 'list' | 'grid';
 
 export type ItemType = 'folder' | 'image' | 'video' | 'audio' | 'document';
@@ -13,15 +15,15 @@ export type ItemViewModel = Item & {
   isRenameMode?: boolean;
 };
 
+export type Path = {
+  segments: string[];
+};
+
 export function toItem(file: File): ItemViewModel {
   return {
     type: getFileType(file),
     name: file.name,
-    date: new Date().toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: '2-digit',
-      day: '2-digit',
-    }),
+    date: moment.utc(new Date()).format('yyyy-MM-DD'),
     size: getFileSize(file),
   };
 }

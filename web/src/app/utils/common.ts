@@ -1,5 +1,3 @@
-export type ItemViewType = 'list' | 'grid';
-
 export type ContextMenuSettings = {
   x: number;
   y: number;

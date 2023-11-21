@@ -1,8 +1,10 @@
 <app-header
   [viewType]="viewType"
+  [path]="path"
   (toggleViewType)="onToggleViewType($event)"
   (addNew)="onAddNew()"
-  (uploadFile)="onUploadFile($event)">
+  (uploadFile)="onUploadFile($event)"
+  (updatePath)="onPathChange($event)">
 </app-header>
 
 
@@ -24,6 +26,7 @@
   <div
   *ngFor="let item of items"
   class="list-item col-sm-12"
+    (dblclick)="onItemOpened(item)"
     (contextmenu)="onContextMenu($event, item)"
     oncontextmenu="return false;">
     <img
@@ -58,6 +61,7 @@
   id="grid">
   <div
     *ngFor="let item of items"
+    (dblclick)="onItemOpened(item)"
     (contextmenu)="onContextMenu($event, item)"
     class="grid-item-wrap col-lg-2 col-md-3 col-sm-4 col-6">
     <div

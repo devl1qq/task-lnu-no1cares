@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ContextMenuSettings } from '../utils/common';
 import { ItemViewModel, ItemViewType, toItem } from '../utils/file';
+import { FileManagerService } from '../services/file-manager.service';
 
 @Component({
   selector: 'app-items-list',
@@ -9,6 +10,7 @@ import { ItemViewModel, ItemViewType, toItem } from '../utils/file';
 })
 export class ItemsListComponent implements OnInit {
   viewType: ItemViewType = 'grid';
+  path: string = 'Home/Products/Shoes';
   items!: ItemViewModel[];
   newItemName: string = '';
   contextMenuSettings: ContextMenuSettings = {
@@ -18,8 +20,10 @@ export class ItemsListComponent implements OnInit {
     data: [],
   };
 
+  constructor(private _fileManagerService: FileManagerService) {}
+
   ngOnInit(): void {
-    this._fillFolders();
+    this.items = this._fileManagerService.getFoldersContent(this.path);
   }
 
   onToggleViewType($event: ItemViewType): void {
@@ -33,7 +37,22 @@ export class ItemsListComponent implements OnInit {
       .forEach((item) => this._addItem(item));
   }
 
-  // region Context Menu
+  onPathChange(path: string): void {
+    this.path = path;
+    this.items = this._fileManagerService.getFoldersContent(path);
+  }
+
+  // region Item Actions
+
+  onItemOpened(item: ItemViewModel): void {
+    if (item.type !== 'folder') {
+      // for now we only support folders
+      return;
+    }
+
+    this.path += `/${item.name}`;
+    this.items = this._fileManagerService.getFoldersContent(this.path);
+  }
 
   onAddNew(): void {
     this.disableContextMenu();
@@ -96,59 +115,6 @@ export class ItemsListComponent implements OnInit {
   // endregion
 
   // region Private Methods
-
-  private _fillFolders(): void {
-    this.items = [
-      {
-        type: 'folder',
-        name: 'Folder 1',
-        date: '2021-01-01',
-        size: '1.5 MB',
-      },
-      {
-        type: 'folder',
-        name: 'Folder 1',
-        date: '2021-01-01',
-        size: '1.5 MB',
-      },
-      {
-        type: 'folder',
-        name: 'Folder 1',
-        date: '2021-01-01',
-        size: '1.5 MB',
-      },
-      {
-        type: 'folder',
-        name: 'Folder 1',
-        date: '2021-01-01',
-        size: '1.5 MB',
-      },
-      {
-        type: 'folder',
-        name: 'Folder 1',
-        date: '2021-01-01',
-        size: '1.5 MB',
-      },
-      {
-        type: 'folder',
-        name: 'Folder 1',
-        date: '2021-01-01',
-        size: '1.5 MB',
-      },
-      {
-        type: 'folder',
-        name: 'Folder 1',
-        date: '2021-01-01',
-        size: '1.5 MB',
-      },
-      {
-        type: 'folder',
-        name: 'Folder 1',
-        date: '2021-01-01',
-        size: '1.5 MB',
-      },
-    ];
-  }
 
   private _addItem(item: ItemViewModel) {
     this.items.push(item);
