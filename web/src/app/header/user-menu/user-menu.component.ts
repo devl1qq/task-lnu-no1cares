@@ -19,15 +19,15 @@ export class UserMenuComponent {
 
   closeSidebar(): void {
     this.isSidebarExpanded = false;
-    // Add your implementation
+    // Add implementation
   }
 
   openSettings(): void {
-    // Add your implementation
+    // Add implementation
   }
 
   openHelp(): void {
-    // Add your implementation
+    // Add implementation
   }
 
   signOut(): void {

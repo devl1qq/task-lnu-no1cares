@@ -1,6 +1,6 @@
-/* user-menu.component.scss */
+
 .sidebar {
-  width: 50px; /* Adjust as needed */
+  width: 50px; 
   background-color: rgba(255, 255, 255);
   padding: 12px 0;
   display: flex;
@@ -10,7 +10,7 @@
 }
 
 .sidebar.expanded {
-  width: 280px; /* Adjust as needed */
+  width: 280px; 
 }
 
 .sidebar-trigger {
@@ -35,7 +35,7 @@
 }
 
 .sidebar-trigger .icon {
-  font-size: 24px; /* Adjust the size as needed */
+  font-size: 24px; 
 }
 
 .sidebar.expanded .sidebar-trigger {
