@@ -24,6 +24,7 @@ import { ContextMenuComponent } from './common/context-menu/context-menu.compone
     ItemsListComponent,
     IconComponent,
     ContextMenuComponent,
+    UserMenuComponent,
   ],
   imports: [
     BrowserModule,
@@ -33,8 +34,6 @@ import { ContextMenuComponent } from './common/context-menu/context-menu.compone
     HttpClientModule,
     NgOptimizedImage,
     NoopAnimationsModule,
-    UserMenuComponent,
-
     MatIconModule,
   ],
   providers: [],

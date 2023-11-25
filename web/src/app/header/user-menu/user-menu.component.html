@@ -1,13 +1,19 @@
-<button
-  [cdkMenuTriggerFor]="menu"
-  class="example-standalone-trigger fw-bolder">{{ userName }}
-</button>
+<!-- user-menu.component.html -->
+<div class="sidebar-button-container">
+  <button (click)="toggleSidebar()" class="sidebar-trigger">
+    <span *ngIf="!isSidebarExpanded" class="icon">&#9776;</span>
+    <span *ngIf="isSidebarExpanded" class="fw-bolder">{{ userName }}</span>
+  </button>
+</div>
 
-<ng-template #menu>
-  <div class="example-menu" cdkMenu>
-    <button class="example-menu-item" cdkMenuItem>Refresh</button>
-    <button class="example-menu-item" cdkMenuItem>Settings</button>
-    <button class="example-menu-item" cdkMenuItem>Help</button>
-    <button class="example-menu-item" cdkMenuItem (click)="signOut()">Sign out</button>
-  </div>
-</ng-template>
+<aside class="sidebar" [ngClass]="{ 'expanded': isSidebarExpanded }">
+  <ng-container *ngIf="isSidebarExpanded; else menuPlaceholder">
+    <div class="sidebar-menu">
+      <button class="sidebar-menu-item" (click)="closeSidebar()">Close</button>
+      <button class="sidebar-menu-item" (click)="openSettings()">Settings</button>
+      <button class="sidebar-menu-item" (click)="openHelp()">Help</button>
+      <button class="sidebar-menu-item" (click)="signOut()">Sign out</button>
+    </div>
+  </ng-container>
+  <ng-template #menuPlaceholder></ng-template>
+</aside>

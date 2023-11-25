@@ -18,23 +18,24 @@
 
   #menu-box {
     display: flex;
-    flex-direction: row;
     align-items: center;
 
     button {
-      padding: 0;
+      padding: 0.5rem;
       border: none;
       margin: 0 0.5rem;
       display: flex;
       align-items: center;
 
       #add-new {
-        transform: translateY(10%);
-      }
-
-      span {
-        margin-left: 0.5rem;
+        margin-right: 0.5rem;
       }
     }
   }
+}
+
+#sidebar-button-container {
+  display: flex;
+  align-items: center;
+  margin-right: 10px; /* Adjust margin as needed */
 }
