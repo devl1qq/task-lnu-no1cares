@@ -27,6 +27,11 @@ export class AuthService {
     this._router.navigate(['auth']);
   }
 
+  isLoggedIn(): boolean {
+    // call server
+    return false;
+  }
+
   private _authenticate() {
     // call server
   }

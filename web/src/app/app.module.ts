@@ -12,9 +12,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { UserMenuComponent } from './header/user-menu/user-menu.component';
 
 import { MatIconModule } from '@angular/material/icon';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { IconComponent } from './common/icon/icon.component';
 import { ContextMenuComponent } from './common/context-menu/context-menu.component';
+import { AuthInterceptorService } from './services/auth-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -37,7 +38,13 @@ import { ContextMenuComponent } from './common/context-menu/context-menu.compone
 
     MatIconModule,
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true,
+    },
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}
