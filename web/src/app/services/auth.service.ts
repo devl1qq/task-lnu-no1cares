@@ -7,19 +7,26 @@ import { AuthRequest } from '../utils/common';
   providedIn: 'root',
 })
 export class AuthService {
+  private apiUrl = 'your_backend_api_url'; // will be replaced with backend API URL
+
   constructor(private _http: HttpClient, private _router: Router) {}
 
   signUp(request: AuthRequest) {
-    // request to server
+    const url = `${this.apiUrl}/signup`; // will be replaced with signup API endpoint
+    return this._http.post(url, request);
   }
 
   signIn(request: AuthRequest) {
-    // request to server
+    const url = `${this.apiUrl}/signin`; // will be replaced with signin API endpoint
 
-    // if success
-    const timeout = 3_300_000; // 55min
-
-    setTimeout(this._authenticate, timeout);
+    this._http.post(url, request).subscribe(
+      (response: any) => {
+        this._authenticate(response);
+      },
+      (error) => {
+        console.error('Sign-in failed:', error);
+      }
+    );
   }
 
   signOut() {
@@ -28,11 +35,21 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    // call server
-    return false;
+    const idToken = localStorage.getItem('idToken');
+    const refreshToken = localStorage.getItem('refreshToken');
+    const accessToken = localStorage.getItem('accessToken');
+  
+    return !!idToken || !!refreshToken || !!accessToken;
   }
+  
 
-  private _authenticate() {
-    // call server
+  private _authenticate(response: any) {
+    const { idToken, refreshToken, accessToken } = response;
+
+    localStorage.setItem('idToken', idToken);
+    localStorage.setItem('refreshToken', refreshToken);
+    localStorage.setItem('accessToken', accessToken);
+
+    this._router.navigate(['main-page']); // will be replaced with the appropriate route
   }
 }
