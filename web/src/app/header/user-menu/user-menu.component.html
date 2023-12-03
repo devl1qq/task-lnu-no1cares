@@ -1,3 +1,4 @@
+<body class="sidebar-not-expanded">
 <div class="sidebar-button-container">
   <button (click)="toggleSidebar()" class="sidebar-trigger">
     <span *ngIf="!isSidebarExpanded" class="icon">&#9776;</span>
@@ -8,11 +9,32 @@
 <aside class="sidebar" [ngClass]="{ 'expanded': isSidebarExpanded }">
   <ng-container *ngIf="isSidebarExpanded; else menuPlaceholder">
     <div class="sidebar-menu">
-      <button class="sidebar-menu-item" (click)="closeSidebar()">Close</button>
+
       <button class="sidebar-menu-item" (click)="openSettings()">Settings</button>
       <button class="sidebar-menu-item" (click)="openHelp()">Help</button>
       <button class="sidebar-menu-item" (click)="signOut()">Sign out</button>
     </div>
   </ng-container>
   <ng-template #menuPlaceholder></ng-template>
-</aside>
+  </aside>
+
+<div *ngIf="isHelpPopupOpen" class="help-popup" position="fixed" z-index="9999">
+  <h3>Send to Support</h3>
+  <textarea [(ngModel)]="helpMessage" placeholder="Type your message to support"></textarea>
+  <div class="popup-buttons">
+    <button class="popup-button" (click)="onSendMessage()">OK</button>
+    <button class="popup-button" (click)="onCancel()">Cancel</button>
+  </div>
+</div>
+
+<div *ngIf="isSettingsPopupOpen" class="settings-popup" position="fixed" z-index="9999">
+  <div class="settings-popup-message">Clear user logs?</div>
+  <div class="settings-popup-buttons">
+    <button class="popup-button" [ngClass]="{ 'logs-cleared': isLogsCleared }" (click)="clearUserLogs()">
+      {{ isLogsCleared ? 'Cleared!' : 'Clear' }}
+    </button>
+    <button class="popup-button" (click)="closeSettingsPopup()">Cancel</button>
+  </div>
+</div>
+
+</body>
