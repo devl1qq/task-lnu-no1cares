@@ -16,18 +16,14 @@ export class HeaderComponent {
   @Output() uploadFile = new EventEmitter<FileList>();
   @Output() updatePath = new EventEmitter<string>();
 
-  @Input() set path(newPath: string) {
-    const segments = newPath.split('/');
-    this.parsedPath = {
-      segments,
-    };
+  @Input() set path(newPath: Path) {
+    this.parsedPath = newPath;
   }
 
   onPathReselect(segmentIdx: number): void {
-    const selectedPath = this.parsedPath.segments.slice(0, segmentIdx + 1);
+    const selectedPath = this.parsedPath.segments.slice(0, segmentIdx + 1).at(-1);
 
-    console.log(selectedPath);
-    this.updatePath.emit(selectedPath.join('/'));
+    this.updatePath.emit(selectedPath?.id);
   }
 
   onToggleViewType(): void {

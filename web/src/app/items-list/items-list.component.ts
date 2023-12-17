@@ -1,16 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ContextMenuSettings } from '../utils/common';
-import { ItemViewModel, ItemViewType, toItem } from '../utils/file';
+import { ItemViewModel, ItemViewType, Path, toItem } from '../utils/file';
 import { FileManagerService } from '../services/file-manager.service';
+import { Subscription, catchError } from 'rxjs';
 
 @Component({
   selector: 'app-items-list',
   templateUrl: './items-list.component.html',
   styleUrls: ['./items-list.component.scss'],
 })
-export class ItemsListComponent implements OnInit {
+export class ItemsListComponent implements OnInit, OnDestroy {
   viewType: ItemViewType = 'grid';
-  path: string = 'Home/Products/Shoes';
+  itemId: string = '';
+  path: Path = {
+    segments: [
+      { name: 'Home',
+        id: ''
+      },
+      { name: 'Products',
+        id: ''
+      },
+      { name: 'Shoes',
+        id: ''
+      },
+    ]
+  };
   items!: ItemViewModel[];
   newItemName: string = '';
   contextMenuSettings: ContextMenuSettings = {
@@ -20,10 +34,26 @@ export class ItemsListComponent implements OnInit {
     data: [],
   };
 
+  private folders$?: Subscription;
+
   constructor(private _fileManagerService: FileManagerService) {}
 
   ngOnInit(): void {
-    this.items = this._fileManagerService.getFoldersContent(this.path);
+    this.refresh();
+  }
+
+  ngOnDestroy(): void {
+    this.folders$?.unsubscribe();
+  }
+
+  refresh(): void {
+    this.folders$ = this._fileManagerService.getFoldersContent(this.itemId).pipe(catchError(err => {
+      console.log(err);
+      return [];
+    })).subscribe(({path, items}) => {
+      this.items = items;
+      this.path = path;
+    });
   }
 
   onToggleViewType($event: ItemViewType): void {
@@ -37,9 +67,9 @@ export class ItemsListComponent implements OnInit {
       .forEach((item) => this._addItem(item));
   }
 
-  onPathChange(path: string): void {
-    this.path = path;
-    this.items = this._fileManagerService.getFoldersContent(path);
+  onPathChange(id: string): void {
+    this.itemId = id;
+    this.refresh();
   }
 
   // region Item Actions
@@ -50,13 +80,15 @@ export class ItemsListComponent implements OnInit {
       return;
     }
 
-    this.path += `/${item.name}`;
-    this.items = this._fileManagerService.getFoldersContent(this.path);
+    this.itemId = item.id;
+    this.refresh();
   }
 
   onAddNew(): void {
     this.disableContextMenu();
     this._addItem({
+      id: '',
+      parentId: '',
       type: 'folder',
       name: 'New Folder',
       date: '2021-01-01',

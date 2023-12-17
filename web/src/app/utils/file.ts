@@ -5,24 +5,38 @@ export type ItemViewType = 'list' | 'grid';
 export type ItemType = 'folder' | 'image' | 'video' | 'audio' | 'document';
 
 export type Item = {
-  type: ItemType;
+  id: string;
+  parentId: string;
   name: string;
+  type: ItemType;
   date: string; // to date
   size: string;
 };
+
+export interface ItemsResponse {
+  items: Item[];
+  path: Path;
+}
 
 export type ItemViewModel = Item & {
   isRenameMode?: boolean;
 };
 
+export type PathItem = {
+  name: string;
+  id: string;
+};
+
 export type Path = {
-  segments: string[];
+  segments: PathItem[];
 };
 
 export function toItem(file: File): ItemViewModel {
   return {
-    type: getFileType(file),
+    id: '',
+    parentId: '',
     name: file.name,
+    type: getFileType(file),
     date: moment.utc(new Date()).format('yyyy-MM-DD'),
     size: getFileSize(file),
   };

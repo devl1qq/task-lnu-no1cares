@@ -10,8 +10,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddCognitoIdentity();
 
-//builder.Services.AddDbContext<WebApiContext>(options => options.UseNpgsql(configuration.GetConnectionString("RdsPostgres")));
-builder.Services.AddDbContext<WebApiContext>(options => options.UseNpgsql(builder.Configuration.GetValue<string>("RdsPostgres")));
+builder.Services.AddDbContext<WebApiContext>(options => options
+    .UseNpgsql(builder.Configuration.GetValue<string>("RdsPostgres")));
 
 builder.Services.AddAuthentication(options =>
 {
